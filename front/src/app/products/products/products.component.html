@@ -1,0 +1,98 @@
+<section id="produits" class="pt-3 pb-0 why-us section light-background">
+    <!-- Section Title -->
+    <div class="py-2 container section-title" data-aos="fade-up">
+        <h2>Nos Produits disponibles<br></h2>
+        @if (isEditPage()) {
+        <p><span>Choisissez le produit</span> <span class="ms-2 description-title">à modifier</span></p>
+        } @else {
+        <p><span>Liste des</span> <span class="ms-2 description-title">produits</span></p>
+        }
+    </div><!-- End Section Title -->
+    <div class="container">
+
+        <div class="row gy-4">
+            <div class="col-lg-12 d-flex align-items-stretch">
+                <div class="row gy-4" data-aos="fade-up" data-aos-delay="200">
+
+                    @for(produit of produits; track $index){
+                    <div class="col-xl-3" data-aos="fade-up" [style]="{'transition-delay': '.'+$index+'s'}">
+                        <div class="icon-box d-flex flex-column justify-content-center align-items-center"
+                            style="height: 85% !important">
+                            <i class="bi bi-clipboard-data"></i>
+                            <h4 class="mb-3">
+                                {{ produit.nom }}
+
+                            </h4>
+
+                            <h4 class="fw-bold mb-3">
+                                @if (produit.quantiteEnStock == 0) {
+                                En rupture
+                                } @else {
+                                {{ produit.quantiteEnStock }} en stock
+                                }
+                            </h4>
+                            <p class="description">
+                                {{ produit.description }}
+                            </p>
+                            <p>
+                                {{ produit.dateAjout | date: 'dd-MM-YYYY - hh:mm' }}
+                            </p>
+                            <div class="price hero m-0 p-0" style="min-height: 10px;">
+                                <a class="btn-get-started">
+                                    {{ produit.prix | currency:'ar' }}
+                                </a>
+                                @if (isEditPage()) {
+                                <button type="button" (click)="editMe(produit.id, editIt)" class="btn">
+                                    <i class="bi bi-pencil fs-2 text-bg-primary"></i>
+                                </button>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<ng-template #editIt let-modal>
+    <form [formGroup]="productForm" (ngSubmit)="submitEdit()" method="post"
+        class="dark-background php-email-form my-3 w-75 m-auto" data-aos="fade-up" data-aos-delay="600">
+        <h3 class="mb-3 p-3 text-bg-dark text-center">Modification d'un produit</h3>
+        <div class="row gy-4">
+
+            <div class="col-md-12">
+                <input type="text" class="form-control" formControlName="nom" />
+            </div>
+
+            <div class="col-md-12">
+                <textarea class="form-control" placeholder="Description" rows="2"
+                    formControlName="description"></textarea>
+            </div>
+
+            <div class="col-md-6">
+                <div class="input-group input-group-md">
+                    <input type="number" class="form-control text-light" placeholder="Prix" formControlName="prix"
+                        style="background-color: color-mix(in srgb, var(--surface-color), transparent 50%);" />
+                    <span class="input-group-text">Ar</span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="input-group input-group-md">
+                    <input type="number" class="form-control text-light" placeholder="Quantité"
+                        formControlName="quantiteEnStock"
+                        style="background-color: color-mix(in srgb, var(--surface-color), transparent 50%);" />
+                </div>
+            </div>
+
+            <div class="col-md-12 text-center">
+
+                <button class="btn btn-primary w-50" type="submit">Modifier</button>
+            </div>
+
+        </div>
+    </form>
+</ng-template>

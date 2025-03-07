@@ -1,0 +1,107 @@
+<!-- Chefs Section -->
+<section id="menu" class="chefs section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>menu</h2>
+        <p><span>Nos</span> <span class="description-title ms-2">menu du jour<br></span></p>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+
+        @if (isLoaded) {
+
+        <div class="row gy-4">
+            @for (menu of menus; track $index) {
+            <div class="col-lg-4 d-flex align-items-stretch mt-4" data-aos="fade-up"
+                [style]="{'transition-delay': '.'+$index+'s'}" style="height: 26rem !important;">
+                <div class="team-member">
+                    <div class="member-img" style="height: 58%;">
+                        <img src="assets/img/chefs/chefs-1.jpg" class="img-fluid" alt="">
+                        <div class="social overflow-y-auto text-nowrap" style="min-width: 75%; max-height: 75%;">
+                            @for (mp of menu.menuProduits; track $index) {
+                            <a href="" class="text-secondary">
+                                <i class="bi bi-clipboard2"></i>
+                                {{ mp.quantite }} * {{ mp.produit.nom }} -
+                                {{ mp.produit.quantiteEnStock }} en stk
+                            </a>
+                            }
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h4>{{ menu.nom }}</h4>
+                        <span class="small">
+                            <i class="bi bi-calendar-day"></i>
+                            {{ menu.dateAjout | date: 'dd-MM-YYYY hh:mm' }}
+                        </span>
+                        <p class="price fw-semibold fst-normal fs-3 text-success">
+                            {{ menu.prix | number:'1.0-0' }} ar
+                        </p>
+                        <button type="button" (click)="acheter(menu.id, modalContent)"
+                            class="btn btn-danger btn-lg rounded-5 fw-bold me-3">
+                            Acheter
+                        </button>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+        } @else {
+        <ng-template #loadingTemplate>
+            <p>Chargement des produits ...</p>
+        </ng-template>
+        }
+
+
+        <!-- @if (menuu || mess || errorMess) { -->
+        <!-- The Modal -->
+        <ng-template #modalContent let-modal>
+            @if (errorMess) {
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <i class="fs-1 text-warning bi bi-exclamation-triangle-fill"></i>
+                <h5 class="m-3 modal-title">{{ errorMess }}</h5>
+                <button type="button" class="btn-close" (click)="modal.dismiss()" data-bs-dismiss="modal"></button>
+            </div>
+            }
+            @else {
+            <!-- Modal Header -->
+            <div class="modal-header py-0">
+                <h5 class="m-3 modal-title">
+                    <i class="bi bi-check-circle-fill fs-3 text-success"></i>
+                    {{ mess }}
+                </h5>
+                <button type="button" class="btn-close" (click)="modal.dismiss()" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h4 class="text-center">
+                    <i class="bi bi-cash-coin fs-4"></i>
+                    A payer
+                    <span class="text-danger">
+                        {{ menuu.prix | number:'1.0-0' }}ar
+                    </span>
+                </h4>
+                <hr />
+                <h4 class="text-decoration-underline">Les ingrédients:</h4>
+                <div class="ingredients text-center overflow-y-auto" style="max-height: 300px;">
+                    @for (mp of menuu.menuProduits; track $index) {
+                    <p class="text-secondary">
+                        <i class="bi bi-cart-check"></i>
+                        {{ mp.quantite }} {{ mp.produit.nom }} - {{ mp.produit.description }} - de
+                        {{ mp.produit.prix | number:'1.0-0' }}ar
+                    </p>
+                    }
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="modal.close()">Fermer</button>
+            </div>
+            }
+        </ng-template>
+        <!-- } -->
+
+    </div>
+
+</section><!-- /Chefs Section -->

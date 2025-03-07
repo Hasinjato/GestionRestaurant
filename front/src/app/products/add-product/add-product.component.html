@@ -1,0 +1,72 @@
+<!-- Contact Section -->
+<section id="admin" class="contact section p-0">
+
+    <!-- Section Title -->
+    <div class="container section-title p-0" data-aos="fade-up">
+        <h2>Admin</h2>
+        <p><span>Ajouter</span> <span class="description-title ms-2">un produit</span></p>
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()" method="post"
+            class="dark-background php-email-form my-3 w-50 m-auto" data-aos="fade-up" data-aos-delay="600">
+            <div class="row gy-4">
+
+                <div class="col-md-12">
+                    <input type="text" class="form-control" placeholder="Nom du produit" formControlName="nom" />
+                    <div *ngIf="productForm.get('nom')?.invalid && (productForm.get('nom')?.touched ||productForm.get('nom')?.dirty)"
+                        class="text-bg-danger mt-1 p-2 border rounded">
+                        <div *ngIf="productForm.get('nom')?.errors">
+                            Le nom du produit est obligatoire
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <textarea class="form-control" placeholder="Description" rows="2"
+                        formControlName="description"></textarea>
+                    <div *ngIf="productForm.get('description')?.invalid && (productForm.get('description')?.touched ||productForm.get('description')?.dirty)"
+                        class="text-bg-danger mt-1 p-2 border rounded">
+                        <div *ngIf="productForm.get('description')?.errors">
+                            La description du produit est obligatoire
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <input type="number" class="form-control text-light" placeholder="Prix" formControlName="prix"
+                        style="background-color: color-mix(in srgb, var(--surface-color), transparent 50%);" />
+                    <div *ngIf="productForm.get('prix')?.invalid && (productForm.get('prix')?.touched ||productForm.get('prix')?.dirty)"
+                        class="text-bg-danger mt-1 p-2 border rounded">
+                        <div *ngIf="productForm.get('prix')?.errors">
+                            Le prix du produit en chiffre est obligatoire
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <input type="number" class="form-control text-light" placeholder="Quantité"
+                        formControlName="quantiteEnStock"
+                        style="background-color: color-mix(in srgb, var(--surface-color), transparent 50%);" />
+                    <div *ngIf="productForm.get('quantiteEnStock')?.invalid && (productForm.get('quantiteEnStock')?.touched ||productForm.get('quantiteEnStock')?.dirty)"
+                        class="text-bg-danger mt-1 p-2 border rounded">
+                        <div *ngIf="productForm.get('quantiteEnStock')?.errors">
+                            La quantite du produit en chiffre est obligatoire
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 text-center">
+                    <div class="loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">Your message has been sent. Thank you!</div>
+
+                    <button class="w-50" type="submit">Ajouter</button>
+                </div>
+
+            </div>
+        </form><!-- End Contact Form -->
+
+    </div>
+
+</section><!-- /Contact Section -->

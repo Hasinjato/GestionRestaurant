@@ -1,0 +1,75 @@
+<!-- Contact Section -->
+<section id="admin" class="contact section p-0">
+
+    <!-- Section Title -->
+    <div class="container section-title p-0" data-aos="fade-up">
+        <h2>Admin</h2>
+        <p><span>Ajouter</span> <span class="description-title ms-2">un Menu</span></p>
+    </div><!-- End Section Title -->
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <form [formGroup]="menuForm" (ngSubmit)="onSubmit(modalContent)" method="post"
+            class="dark-background php-email-form my-3 w-50 m-auto" data-aos="fade-up" data-aos-delay="600">
+            <div class="row gy-4">
+
+                <div class="col-md-12">
+                    <input type="text" class="form-control" placeholder="Nom du menu" formControlName="nom" />
+                    <div *ngIf="menuForm.get('nom')?.invalid && (menuForm.get('nom')?.touched || menuForm.get('nom')?.dirty)"
+                        class="text-bg-danger mt-1 p-2 border rounded">
+                        <div *ngIf="menuForm.get('nom')?.errors">
+                            Le nom du menu est obligatoire
+                        </div>
+                    </div>
+                </div>
+                <div formArrayName="produitsQuantites">
+
+                    @for (produit of produitsQuantites.controls; track $index) {
+                    <table [formGroupName]="$index">
+                        <thead class="text-light">
+                            <th class="w-50">Produit</th>
+                            <th class="w-25">Quantité</th>
+                            <th class="w-25"></th>
+                        </thead>
+                        <tbody>
+                            <td>
+                                <select class="form-select form-select-md" formControlName="produitId">
+                                    @for (prod of produits; track $index) {
+                                    <option [value]="prod.id">{{ prod.nom }} - {{ prod.prix }}ar dispo: {{
+                                        prod.quantiteEnStock }}
+                                    </option>
+                                    }
+                                </select>
+                            </td>
+                            <td class="p-2">
+                                <input class="form-control" formControlName="quantite" type="number">
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" (click)="removeProducts($index)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tbody>
+                    </table>
+                    }
+                </div>
+                <button type="button" (click)="addProducts()" (click)="loadProd()" class="btn btn-primary w-auto"
+                    style="position: relative; left: 65%; bottom: 1rem;"><i class="bi bi-plus-lg"></i> Ajouter un
+                    produit</button>
+
+                <button type="submit">
+                    Ajouter Menu
+                </button>
+            </div>
+        </form>
+        
+        <ng-template #modalContent let-modal>
+            @if (errorMsg) {
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <i class="fs-1 text-warning bi bi-exclamation-triangle-fill"></i>
+                    <h5 class="m-3 modal-title">{{ errorMsg }}</h5>
+                    <button type="button" class="btn-close" (click)="modal.dismiss()" data-bs-dismiss="modal"></button>
+                </div>
+                }
+        </ng-template>
+    </div>
+</section>

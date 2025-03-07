@@ -1,0 +1,4 @@
+.form-control::placeholder {
+    --bs-text-opacity: 1;
+    color: #ffffff80 !important;
+}
